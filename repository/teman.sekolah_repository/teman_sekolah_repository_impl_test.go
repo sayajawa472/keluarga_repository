@@ -32,3 +32,30 @@ func TestConnectionInsert(t *testing.T) {
 
 		fmt.Println(TemanSekolah)
 	}
+
+	func TemanSekolahRepository.FindAll(t *testing.T) {
+		KeluargaRepository := 	NewTemanSekolahRepository(golang_database.GetConnection())
+
+		NamaPersonil, err := KeluargaRepository.FindById(context.Background(), 37)
+		if err != nil {
+
+			fmt.Println(NamaPersonil)
+		}
+
+		func TestUpdate(t *testing.T) {
+			TemanSekolahRepository := NewTemanSekolahRepository(golang_database.GetConnection())
+
+			ctx := context.Background()
+			TemanSekolahRepository:= entity.Teman_sekolah
+				JenisKelamin: "Wanita",
+				Hobi: "Berenang",
+			}
+
+			func TestDelete(t*testing.T)
+			{
+				TemanSekolahRepository := TemanSekolahRepository(golang_database.GetConnection())
+
+				ctx := context.Background()
+				delete("Jenis Kelamin")
+				entity.Teman_sekolah{
+				}

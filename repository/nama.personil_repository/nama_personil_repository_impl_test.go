@@ -25,7 +25,7 @@ func TestConnectInsert(t *testing.T)  {
 
 	}
 
-	func comment_repository.TestFindById(t *testing.T) {
+	func NamaPersonilRepositoryImpl.TestFindById(t *testing.T) {
 		NewNamaPersonilRepository(golang_database.GetConnection())
 
 		NamaPersonil, err := NewNamaPersonilRepository.FindById(context.Background(), 37)
@@ -34,8 +34,8 @@ func TestConnectInsert(t *testing.T)  {
 			fmt.Println(NamaPersonil)
 		}
 
-		func comment_repository.TestFindById(t *testing.T) {
-			NamaPersonilRepositor := NewNamaPersonilRepository(golang_database.GetConnection())
+		func NamaPersonilRepository.TestFindAll(t *testing.T) {
+			NamaPersonilRepository := NewNamaPersonilRepository(golang_database.GetConnection())
 
 			NamaPersonil, err := NamaPersonilRepository.FindById(context.Background(), 37)
 			if err != nil {
@@ -47,21 +47,14 @@ func TestConnectInsert(t *testing.T)  {
 				NamaPersonilRepository := NewNamaPersonilRepository(golang_database.GetConnection())
 
 				ctx := context.Background()
-				comment := entity.Comment{
+				NamaPersonil := entity.Comment{
 					Nama : "Harry Styles",
 					JenisKelamin: "Pria",
 				}
 
-				result, err := NamaPersonilRepositor.Update(ctx, NamaPersonil)
-				if err != nil {
-				}
-				fmt.Println(result)
-				}
+				func TestDelete(t*testing.T) {
+					NamaPersonilRepository := NewNamaPersonilRepository(golang_database.GetConnection())
 
-				func TestDelete(t *testing.T) {
-				NamaPersonilRepositor := NewNamaPersonilRepository(golang_database.GetConnection()}
-
-				ctx := context.Background()
-				NamaPersonil := entity.Nama_personil{
-					Email : "Aqillafn74@gmail.com",
-				}
+					ctx := context.Background()
+					delete("Jenis Kelamin") entity.Nama_personil{
+					}

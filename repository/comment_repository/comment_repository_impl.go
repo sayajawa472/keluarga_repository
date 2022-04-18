@@ -36,7 +36,9 @@ func (repository *commentRepositoryImpl) FindById(ctx context.Context, id int32)
 	rows, err := repository.DB.QueryContext(ctx, script, id)
 	comment := entity.Comment{}
 
-	if err != nil : comment, err
+	if err != nil {
+		return comment, err
+	}
 	defer rows.Close()
 	if rows.Next() {
 		// ADA
@@ -57,9 +59,9 @@ func (repository *commentRepositoryImpl) FindAll(ctx context.Context) ([]entity.
 	defer rows.Close()
 	var comments []entity.Comment
 	for rows.Next() {
-		comments := entity.Comment{}
-		rows.Scan(&comments.Id, &comments.Email, &comments.Comment)
-		comments = append(comments, comments)
+		comment := entity.Comment{}
+		rows.Scan(&comment.Id, &comment.Email, &comment.Comment)
+		comments = append(comments, comment)
 	}
 	return comments, nil
 }
