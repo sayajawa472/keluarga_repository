@@ -4,9 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"github.com/go-sql-driver/mysql"
 	"golang_database/entity"
-	nama_personil_repository2 "golang_database/repository/nama.personil_repository"
 	"strconv"
 )
 
@@ -15,15 +13,21 @@ type PenyanyiFavoritImpl struct {
 }
 
 func NewPenyanyiFavorit(db *sql.DB) PenyanyiFavorit {
-	return &PenyanyiFavorit
+	return &PenyanyiFavoritImpl{DB: db}
 
-func (repository *PenyanyiFavoritImpl) Insert(ctx context.Context, favorit PenyanyiFavorit) (entity.Penyanyi_favorit, error) {
-	script := "INSERT INTO PenyanyiFavorit(nama, hobi) VALUE(?, ?)"
-	result, err := repository.DB.ExecContext(ctx, script, PenyanyiFavorit.PenyanyiFavorit)
-	if err != nil {
-		PenyanyiFavorit.
-	}
-	return PenyanyiFavorit, nil
+	func(repository *PenyanyiFavoritImpl) Insert(ctx context.Context, PenyanyiFavorit entity.PenyanyiFavorit) (entity.Penyanyi_favorit, error) {
+		script := "INSERT INTO PenyanyiFavorit(nama, hobi) VALUE(?, ?)"
+		result, err := repository.DB.ExecContext(ctx, script, PenyanyiFavorit.Nama, PenyanyiFavorit.JenisKelamin)
+		if err != nil {
+			return PenyanyiFavorit, err
+		}
+		id, err := result.LastInsertId()
+		if err != nil {
+			return PenyanyiFavorit, err
+
+		}
+		PenyanyiFavorit.Id = int32(id)
+		return PenyanyiFavorit, nil
 
 }
 
@@ -33,9 +37,9 @@ func (repository *PenyanyiFavoritImpl) Insert(ctx context.Context, favorit Penya
 		keluarga := entity.Penyanyi_favorit{}
 
 		if err != nil {
-			return PenyanyiFavorit err
+			return PenyanyiFavorit, err
 		}
-		}
+	}
 		defer rows.Close()
 		if rows.Next() {
 			// ADA
@@ -81,5 +85,5 @@ func (repository *PenyanyiFavoritImpl) Insert(ctx context.Context, favorit Penya
 		if rows == 0 {
 			return PenyanyiFavorit, err
 		}
-		return PenyanyiFavorit := nil
+		return id, nil
 	}

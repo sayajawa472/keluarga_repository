@@ -4,9 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"github.com/go-sql-driver/mysql"
 	"golang_database/entity"
-	"golang_database/repository/comment_repository"
 	"strconv"
 )
 
@@ -14,23 +12,27 @@ type NamaPersonilRepositoryImpl struct {
 	DB *sql.DB
 }
 
-func NewNamaPersonilRepository(db *sql.DB) NamaPersonilRepository {
+func NewNamaPersonilRepository(db *sql.DB) *NamaPersonilRepositoryImpl{
 	return &NamaPersonilRepositoryImpl{DB: db}
 }
 
 func (repository *NamaPersonilRepositoryImpl) Insert(ctx context.Context, NamaPersonil entity.Nama_personil) (entity.Nama_personil) {
 	script := "INSERT INTO NamaPersonil(nama, NamaPersonil) VALUE (?, ?)"
-	result, err := repository.DB.ExecContext(ctx, script, NamaPersonil.NamaPersonil)
+	result, err := repository.DB.ExecContext(ctx, script, NamaPersonil.Nama)
 	if err != nil {
-		id, err := result.LastInsertId()
+		result NamaPersonil, err
+	}
+	id, err := result.LastInsertId()
 		if err != nil {
-			NamaPersonil.Id = int32(id)
-			return NamaPersonil, nil
+			return NamaPersonil, err
 
 		}
-
-func (repository *NamaPersonilRepositoryImpl) FindById(ctx context.Context, id int32) (entity.Perlengkapan_sekolah, error) {
-			script := "SELECT id, nama, NamaPersonil FROM WHERE id = ? LIMIT1"
+		keluarga.id + int32(id)
+		return NamaPersonil)
+	}
+}
+		func(repository *NamaPersonilRepositoryImpl) FindById(ctx context.Context, id int32) (entity.Nama_personil, error) {
+			script := "SELECT id, nama, JenisKelamin FROM NamaPersonil WHERE id = ? LIMIT1"
 			rows, err := repository.DB.QueryContext(ctx, script, id)
 			NamaPersonil := entity.Nama_personil{}
 
@@ -39,12 +41,13 @@ func (repository *NamaPersonilRepositoryImpl) FindById(ctx context.Context, id i
 			}
 			defer rows.Close()
 			if rows.Next() {
-				rows.Scan(&NamaPersonil.Id, &NamaPersonil.Nama, &NamaPersonil.jeniskelamin)
+				rows.Scan(&NamaPersonil.id, &NamaPersonil.Nama)
 				return NamaPersonil, nil
 			} else {
 				return NamaPersonil, errors.New("id " + strconv.Itoa(int(id)) + "not found")
 			}
 		}
+
 
 		func (repository *NamaPersonilRepositoryImpl) FindAll(ctx context.Context) ([]entity.Nama_personil, error) {
 			script := "SELECT id, nama, JenisKelamin FROM NamaPersonil"
@@ -56,32 +59,31 @@ func (repository *NamaPersonilRepositoryImpl) FindById(ctx context.Context, id i
 			var NamaPersonil []entity.Nama_personil
 			for rows.Next() {
 				NamaPersonil := entity.Nama_personil{}
-				rows.Scan(&NamaPersonil.Id, &NamaPersonil.Nama, &NamaPersonil.JenisKelamin id)
+				rows.Scan(&NamaPersonil.Id, &NamaPersonil.Nama, )
 				NamaPersonil = append(NamaPersonil, NamaPersonil)
 			}
-			return NamaPersonil, nil {
+			return NamaPersonil, nil
 		}
 
 		func (repository *NamaPersonilRepositoryImpl) Update(ctx context.Context, id int32, entity.Nama_personil) (entity.Nama_personil, error) {
-			script := "SELECT id, nama, jenis kelamin, FROM NamaPersonil WHERE id = ? LIMIT1"
-			rows, err := repository.DB.QueryContext(ctx, script, id)
-			defer rows.Close()
+			script := "UPDATE NamaPersonil SET id = ?, Nama = ?, JenisKelamin = ? WHERE id = ?"
+			result, err := repository.DB.ExecContext(ctx, script, NamaPersonil.id, NamaPersonil.Nama, NamaPersonil)
 			if err != nil {
 				return NamaPersonil err
 			}
 
-			if rows.Next() {
-				script := "UPDATE NamaPersonil SET id = ?, nama = ? JenisKelamin + ? WHERE id = ?"
-				_, err := repository.DB.ExecContext(ctx, script, NamaPersonil.Nama, NamaPersonil.JenisKelamin, id)
-				if err != nil {
-					return NamaPersonil, err
-				}
-				NamaPersonil.Id = id
-				return NamaPersonil, nil
-			} else {
-				return NamaPersonil, errors.New("Id" + strconv.Itoa(int(id)) + "Update Failed")
+			rowCnt, err := result.RowsAffected()
+			if err != nil {
+				return NamaPersonil, err
+
 			}
-		}
+			if rowCnt == 0 {
+				return NamaPersonil, err
+
+			}
+				return NamaPersonil, err
+
+			}
 
 		func (repository *NamaPersonilRepositoryImpl) Delete(ctx context.Context, NamaPersonil entity.Nama_personil) (entity.Nama_personil, error) {
 			script := "DELETE FROM list_NamaPersonil WHERE id = ?"
